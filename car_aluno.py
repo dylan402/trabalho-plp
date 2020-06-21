@@ -8,7 +8,7 @@ BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 RED = (255, 0, 0)
 GREEN = (20, 255, 140)
-GREY = (210, 210 ,210)
+GREY = (210, 210, 210)
 W_BGCOLOR = GREEN
 SPEED = 5 # velocidade de movimento do carrinho do jogador
 SPEED1 = [0,2] # velocidade de movimento do carrinho oponente 1
@@ -22,7 +22,12 @@ LEVEL_FREQ = 10
 # Tamanho de cada pista (em pixels)
 INICIO_PISTA = W_WIDTH // 100 * 15
 FIM_PISTA = W_WIDTH // 100 * 45
-FAIXAS = [INICIO_PISTA * 2, FIM_PISTA]
+FAIXAS_PISTA = [INICIO_PISTA * 2, FIM_PISTA]
+FAIXAS = [
+   [INICIO_PISTA, INICIO_PISTA * 2],
+   [INICIO_PISTA * 2, INICIO_PISTA * 3],
+   [INICIO_PISTA * 3, INICIO_PISTA * 4]
+]
 # Lista contendo as imagens de arvores usadas no jogo
 TREES = ["tree_1.png", "tree_2.png", "tree_3.png", "tree_4.png", "tree_5.png"]
 
@@ -45,15 +50,15 @@ opponent_2 = pygame.image.load("assets/images/red_car.png")
 
 # define posicao inicial para o carrinho (não alterar)
 car_rect = car.get_rect()
-car_rect.center = (W_WIDTH // 2, W_HEIGHT - 100)
+car_rect.center = (W_WIDTH // 3 + 40, W_HEIGHT - 100)
 
 # define posicoes iniciais para os oponentes (não alterar)
 # Repare que a coordenada ``y'' é negativa. Isso permite
 # iniciar aos carrinhos em uma posição fora da tela.
 opponent_1_rect = opponent_1.get_rect()
 opponent_2_rect = opponent_2.get_rect()
-opponent_1_rect.center = (random.randint(70, 160), random.randint(-5, 0))
-opponent_2_rect.center = (random.randint(160, 290), random.randint(-5, 0))
+opponent_1_rect.center = (random.randint(INICIO_PISTA + 20, INICIO_PISTA * 2 - 20), 100)
+opponent_2_rect.center = (random.randint(INICIO_PISTA * 3 + 20, INICIO_PISTA * 4 - 20), 100)
 
 # carrega as imagens das árvores, escolhendo-as aleatoriamente. Repare que apenas
 # duas árvores são visíveis na tela a cada instante (não alterar).
@@ -68,8 +73,8 @@ t2 = random.randint(3, 4)
 # define posicoes iniciais para as arvores (não alterar)
 # Repare que a coordenada ``y'' é negativa. Isso permite
 # iniciar as ávores em uma posição fora da tela.
-trees_images_rect[t1].center = (450, -1)
-trees_images_rect[t2].center = (410, -300)
+trees_images_rect[t1].center = (random.randint(W_WIDTH - 350, W_WIDTH - 200), -250)
+trees_images_rect[t2].center = (random.randint(W_WIDTH - 350, W_WIDTH - 200), -10)
 
 
 # X [TODO] carregar a musica de fundo e deixá-la em execução
@@ -105,13 +110,16 @@ def reinicia_oponente():
 
 # CODIGO PRINCIPAL
 while True:
+   # X [TODO] desenhar a imagem de fundo. Utilize os valores numéricos da tela e das pistas.
    # Define cor de background
    SCREEN.fill(GREEN)
    # Desenha fundo da pista
    pygame.draw.rect(SCREEN, GREY, (INICIO_PISTA, 0, FIM_PISTA, W_HEIGHT))
    # Desenha as faixas da pista
-   for faixa in FAIXAS:
+   for faixa in FAIXAS_PISTA:
       pygame.draw.line(SCREEN, WHITE, (faixa, 0), (faixa, W_HEIGHT), 4)
+   for faixa in FAIXAS:
+      pygame.draw.line(SCREEN, RED, (faixa[0], 0), (faixa[1], W_HEIGHT), 4)
 
 
    # X [TODO] Capturar o evento de fechar o jogo na interface.
@@ -124,18 +132,16 @@ while True:
          pygame.quit()
          sys.exit()
 
-   # [TODO] desenhar a imagem de fundo. Utilize os valores numéricos da tela e das pistas.
+   # X [TODO mover as arvores em 1 pixel. Reposicionar quando as arvores saem da Interface.
+   trees_images_rect[t1].move_ip(0, 1)
+   trees_images_rect[t2].move_ip(0, 1)
 
-
-   # [TODO mover as arvores em 1 pixel. Reposicionar quando as arvores saem da Interface.
-   """ trees_images_rect[t1].move_ip()
-   trees_images_rect[t2].move_ip()
-   if():
+   if(trees_images_rect[t1].y >= W_HEIGHT + 25):
       t1 = random.randint(0, 2)
-      trees_images_rect[t1].center = (450, -1)
-   if():
+      trees_images_rect[t1].center = (random.randint(W_WIDTH - 350, W_WIDTH - 200), -250)
+   if(trees_images_rect[t2].y >= W_HEIGHT + 25):
       t2 = random.randint(3, 4)
-      trees_images_rect[t2].center = (410, -300) """
+      trees_images_rect[t2].center = (random.randint(W_WIDTH - 350, W_WIDTH - 200), -10)
 
    # [TODO] Capturar uma tecla pressionada para mover o carrinho. Usar as teclas
    # UP, DOWN, LEFT e RIGHT (setinhas). Para mover o carrinho use a velocidade na
