@@ -20,7 +20,8 @@ LEVEL = 10
 # Isto é, a cada 10 carrinhos ultrapassados aumentar a velocidade destes.
 LEVEL_FREQ = 10
 # Tamanho de cada pista (em pixels)
-#FAIXAS = [[40,140],[144,250],[254,290]]
+INICIO_PISTA = W_WIDTH // 100 * 15
+FIM_PISTA = W_WIDTH // 100 * 45
 # Lista contendo as imagens de arvores usadas no jogo
 TREES = ["tree_1.png", "tree_2.png", "tree_3.png", "tree_4.png", "tree_5.png"]
 
@@ -74,17 +75,6 @@ pygame.mixer.music.load("assets/sounds/top-Gear-Soundtrack.mp3")
 pygame.mixer.music.play(-1)
 pygame.mixer.music.set_volume(0.05)
 
-# Define cor de background
-SCREEN.fill(GREEN)
-# Desenha fundo da pista
-pygame.draw.rect(SCREEN, GREY, (W_WIDTH // 100 * 15, 0, W_WIDTH // 100 * 45, W_HEIGHT))
-# Desenha as faixas da pista
-
-FAIXAS = [[W_WIDTH // 100 * 30, W_WIDTH // 100 * 30], [W_WIDTH // 100 * 45, W_WIDTH // 100 * 45]]
-for faixa in FAIXAS:
-   print(faixa)
-   pygame.draw.line(SCREEN, WHITE, (faixa[0], 0), (faixa[1], W_HEIGHT), 4)
-
 # Funções para o jogo
 #
 
@@ -113,6 +103,26 @@ def reinicia_oponente():
 
 # CODIGO PRINCIPAL
 while True:
+   # Define cor de background
+   SCREEN.fill(GREEN)
+   # Desenha fundo da pista
+   pygame.draw.rect(SCREEN, GREY, (INICIO_PISTA, 0, FIM_PISTA, W_HEIGHT))
+   # Desenha as faixas da pista
+   FAIXAS = [INICIO_PISTA * 2, FIM_PISTA]
+   for faixa in FAIXAS:
+      pygame.draw.line(SCREEN, WHITE, (faixa, 0), (faixa, W_HEIGHT), 4)
+
+
+   # X [TODO] Capturar o evento de fechar o jogo na interface.
+   # A musica deve ser finalizada antes do fechamento do jogo.
+   for event in pygame.event.get():
+      if event.type == pygame.QUIT:
+         pygame.mixer.music.stop()
+         pygame.mixer.music.unload()
+
+         pygame.quit()
+         sys.exit()
+
    # [TODO] desenhar a imagem de fundo. Utilize os valores numéricos da tela e das pistas.
 
 
@@ -126,21 +136,17 @@ while True:
       t2 = random.randint(3, 4)
       trees_images_rect[t2].center = (410, -300) """
 
-   # X [TODO] Capturar o evento de fechar o jogo na interface.
-   # A musica deve ser finalizada antes do fechamento do jogo.
-   for event in pygame.event.get():
-      if event.type == pygame.QUIT:
-         pygame.mixer.music.stop()
-         pygame.mixer.music.unload()
-
-         pygame.quit()
-         sys.exit()
-
    # [TODO] Capturar uma tecla pressionada para mover o carrinho. Usar as teclas
    # UP, DOWN, LEFT e RIGHT (setinhas). Para mover o carrinho use a velocidade na
    # coordenada correta.
    if pygame.key.get_focused():
       key = pygame.key.get_pressed()
+
+      if key[pygame.K_LEFT]:
+         car_rect.move_ip(-5, 0) # move o carrinho 5 pixels na coordenada x (para esquerda)
+      elif key[pygame.K_RIGHT]:
+         car_rect.move_ip(5, 0) # move o carrinho 5 pixels na coordenada x (para direita)
+
 
 
    # [TODO] mover os carrinhos oponentes
