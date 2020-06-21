@@ -22,6 +22,7 @@ LEVEL_FREQ = 10
 # Tamanho de cada pista (em pixels)
 INICIO_PISTA = W_WIDTH // 100 * 15
 FIM_PISTA = W_WIDTH // 100 * 45
+FAIXAS = [INICIO_PISTA * 2, FIM_PISTA]
 # Lista contendo as imagens de arvores usadas no jogo
 TREES = ["tree_1.png", "tree_2.png", "tree_3.png", "tree_4.png", "tree_5.png"]
 
@@ -108,7 +109,6 @@ while True:
    # Desenha fundo da pista
    pygame.draw.rect(SCREEN, GREY, (INICIO_PISTA, 0, FIM_PISTA, W_HEIGHT))
    # Desenha as faixas da pista
-   FAIXAS = [INICIO_PISTA * 2, FIM_PISTA]
    for faixa in FAIXAS:
       pygame.draw.line(SCREEN, WHITE, (faixa, 0), (faixa, W_HEIGHT), 4)
 
