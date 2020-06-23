@@ -172,18 +172,28 @@ while True:
    if pygame.key.get_focused():
       key = pygame.key.get_pressed()
 
-      if key[pygame.K_LEFT]:
+      if key[pygame.K_UP]:
+         if key[pygame.K_LEFT]:
+            car_rect.move_ip(-5, -5) # move o carrinho 5 pixels na coordenada x (para esquerda)
+         elif key[pygame.K_RIGHT]:
+            car_rect.move_ip(5, -5) # move o carrinho 5 pixels na coordenada x (para direita)
+         else:
+            car_rect.move_ip(0, -5) # move o carrinho 5 pixels na coordenada x (para cima)
+      elif key[pygame.K_DOWN]:
+         if key[pygame.K_LEFT]:
+            car_rect.move_ip(-5, 5) # move o carrinho 5 pixels na coordenada x (para esquerda)
+         elif key[pygame.K_RIGHT]:
+            car_rect.move_ip(5, 5) # move o carrinho 5 pixels na coordenada x (para direita)
+         else:
+            car_rect.move_ip(0, 5) # move o carrinho 5 pixels na coordenada y (para baixo)
+      elif key[pygame.K_LEFT]:
          car_rect.move_ip(-5, 0) # move o carrinho 5 pixels na coordenada x (para esquerda)
       elif key[pygame.K_RIGHT]:
          car_rect.move_ip(5, 0) # move o carrinho 5 pixels na coordenada x (para direita)
-      elif key[pygame.K_UP]:
-         car_rect.move_ip(0, -5) # move o carrinho 5 pixels na coordenada x (para direita)
-      elif key[pygame.K_DOWN]:
-         car_rect.move_ip(0, 5) # move o carrinho 5 pixels na coordenada x (para direita)
 
 
 
-   # [TODO] mover os carrinhos oponentes
+   # X [TODO] mover os carrinhos oponentes
    opponent_1_rect.move_ip(0, 1)
    opponent_2_rect.move_ip(0, 1)
 
