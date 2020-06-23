@@ -1,4 +1,4 @@
-import sys, pygame
+import sys, pygame, math
 import random
 
 # definicao de constantes para o jogo
@@ -11,8 +11,8 @@ GREEN = (20, 255, 140)
 GREY = (210, 210, 210)
 W_BGCOLOR = GREEN
 SPEED = 5 # velocidade de movimento do carrinho do jogador
-SPEED1 = [0,2] # velocidade de movimento do carrinho oponente 1
-SPEED2 = [0,3] # velocidade de movimento do carrinho oponente 1
+SPEED_OPPONENT1 = [0,2] # velocidade de movimento do carrinho oponente 1
+SPEED_OPPONENT2 = [0,3] # velocidade de movimento do carrinho oponente 1
 SPEED_LEVEL = 0.1 # Taxa de aumento da velocidade dos carrinhos
 # próximo nível (valor sugerido: pode ser alterado conforme a sua lógica)
 LEVEL = 10
@@ -93,7 +93,7 @@ def captura_colisao_oponentes():
 
 
 def captura_colisao():
-   global SPEED, SPEED1, SPEED2
+   global SPEED, SPEED_OPPONENT1, SPEED_OPPONENT2
    """
    [TODO] Detectar colisao entre o carrinho e cada um de seus oponentes ('blocos'). Em caso
    de colisão, retornar True e parar o movimento de todos os elementos. Sem colisão detectada,
@@ -143,7 +143,7 @@ while True:
       t2 = random.randint(3, 4)
       trees_images_rect[t2].center = (random.randint(W_WIDTH - 350, W_WIDTH - 200), -10)
 
-   # [TODO] Capturar uma tecla pressionada para mover o carrinho. Usar as teclas
+   # X [TODO] Capturar uma tecla pressionada para mover o carrinho. Usar as teclas
    # UP, DOWN, LEFT e RIGHT (setinhas). Para mover o carrinho use a velocidade na
    # coordenada correta.
    if pygame.key.get_focused():
@@ -153,10 +153,21 @@ while True:
          car_rect.move_ip(-5, 0) # move o carrinho 5 pixels na coordenada x (para esquerda)
       elif key[pygame.K_RIGHT]:
          car_rect.move_ip(5, 0) # move o carrinho 5 pixels na coordenada x (para direita)
+      elif key[pygame.K_UP]:
+         car_rect.move_ip(0, -5) # move o carrinho 5 pixels na coordenada x (para direita)
+      elif key[pygame.K_DOWN]:
+         car_rect.move_ip(0, 5) # move o carrinho 5 pixels na coordenada x (para direita)
 
 
 
    # [TODO] mover os carrinhos oponentes
+   opponent_1_rect.move_ip(0, 1)
+   opponent_2_rect.move_ip(0, 1)
+
+   if(opponent_1_rect.y >= W_HEIGHT + 50):
+      opponent_1_rect.center = (random.randint(INICIO_PISTA + 20, INICIO_PISTA * 2 - 20), -50)
+   if(opponent_2_rect.y >= W_HEIGHT + 50):
+      opponent_2_rect.center = (random.randint(INICIO_PISTA * 3 + 20, INICIO_PISTA * 4 - 20), -50)
 
 
    """ # [TODO] detectar colisão
