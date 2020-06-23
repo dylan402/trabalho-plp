@@ -85,9 +85,32 @@ pygame.mixer.music.set_volume(0.05)
 # Funções para o jogo
 #
 
-def captura_colisao_oponentes():
+def captura_colisao_oponentes(car_rect):
    global opponent_1_rect, opponent_2_rect
-   """ [TODO] Detectar colisao entre os oponentes ('blocos'). Em caso de colisao,
+
+   # Colisão com oponente 1
+   if (min(car_rect.x, car_rect.x + car_rect.w) < max(opponent_1_rect.x, opponent_1_rect.x + opponent_1_rect.w)
+      and min(car_rect.y, car_rect.y + car_rect.h) < max(opponent_1_rect.y, opponent_1_rect.y + opponent_1_rect.h)
+      and max(car_rect.x, car_rect.x + car_rect.w) > min(opponent_1_rect.x, opponent_1_rect.x + opponent_1_rect.w)
+      and max(car_rect.y, car_rect.y + car_rect.h) > min(opponent_1_rect.y, opponent_1_rect.y + opponent_1_rect.h)
+   ):
+      print('colisão oponente 1')
+      return True
+
+   # Colisão com oponente 2
+   if (min(car_rect.x, car_rect.x + car_rect.w) < max(opponent_2_rect.x, opponent_2_rect.x + opponent_2_rect.w)
+      and min(car_rect.y, car_rect.y + car_rect.h) < max(opponent_2_rect.y, opponent_2_rect.y + opponent_2_rect.h)
+      and max(car_rect.x, car_rect.x + car_rect.w) > min(opponent_2_rect.x, opponent_2_rect.x + opponent_2_rect.w)
+      and max(car_rect.y, car_rect.y + car_rect.h) > min(opponent_2_rect.y, opponent_2_rect.y + opponent_2_rect.h)
+   ):
+      print('colisão oponente 2')
+      return True
+
+   print('sem colisão')
+   return False
+
+   """
+   [TODO] Detectar colisao entre os oponentes ('blocos'). Em caso de colisao,
        afastar um carrinho para o lado sem deixa-lo sair das pistas.
    """
 
@@ -170,10 +193,10 @@ while True:
       opponent_2_rect.center = (random.randint(INICIO_PISTA * 3 + 20, INICIO_PISTA * 4 - 20), -50)
 
 
-   """ # [TODO] detectar colisão
-   captura_colisao_oponentes()
+   # [TODO] detectar colisão
+   captura_colisao_oponentes(car_rect)
 
-   # [TODO] reiniciar oponentes quando
+   """ # [TODO] reiniciar oponentes quando
    reinicia_oponente() """
 
    # [TODO] a cada intervalo de pontos a velocidade dos oponentes eh aumentada
