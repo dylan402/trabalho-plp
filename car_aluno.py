@@ -174,22 +174,22 @@ while True:
 
       if key[pygame.K_UP]:
          if key[pygame.K_LEFT]:
-            car_rect.move_ip(-5, -5) # move o carrinho 5 pixels na coordenada x (para esquerda)
+            car_rect.move_ip(-5, -5)
          elif key[pygame.K_RIGHT]:
-            car_rect.move_ip(5, -5) # move o carrinho 5 pixels na coordenada x (para direita)
+            car_rect.move_ip(5, -5)
          else:
-            car_rect.move_ip(0, -5) # move o carrinho 5 pixels na coordenada x (para cima)
+            car_rect.move_ip(0, -5)
       elif key[pygame.K_DOWN]:
          if key[pygame.K_LEFT]:
-            car_rect.move_ip(-5, 5) # move o carrinho 5 pixels na coordenada x (para esquerda)
+            car_rect.move_ip(-5, 5)
          elif key[pygame.K_RIGHT]:
-            car_rect.move_ip(5, 5) # move o carrinho 5 pixels na coordenada x (para direita)
+            car_rect.move_ip(5, 5)
          else:
-            car_rect.move_ip(0, 5) # move o carrinho 5 pixels na coordenada y (para baixo)
+            car_rect.move_ip(0, 5)
       elif key[pygame.K_LEFT]:
-         car_rect.move_ip(-5, 0) # move o carrinho 5 pixels na coordenada x (para esquerda)
+         car_rect.move_ip(-5, 0)
       elif key[pygame.K_RIGHT]:
-         car_rect.move_ip(5, 0) # move o carrinho 5 pixels na coordenada x (para direita)
+         car_rect.move_ip(5, 0)
 
 
 
