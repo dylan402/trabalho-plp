@@ -131,6 +131,7 @@ def captura_colisao():
 def reinicia_oponente():
    global opponent_1_rect, opponent_2_rect, score, faixa_opponent_1, faixa_opponent_2
 
+   # Reinicia oponente 1
    if(opponent_1_rect.y >= W_HEIGHT + 50):
       faixa_opponent_1 = random.randint(0, len(FAIXAS) - 1)
 
@@ -140,6 +141,7 @@ def reinicia_oponente():
       opponent_1_rect.center = (random.randint(FAIXAS[faixa_opponent_1][0] + 25, FAIXAS[faixa_opponent_1][1] - 25), -50)
       score += 1
 
+   # Reinicia oponente 2
    if(opponent_2_rect.y >= W_HEIGHT + 50):
       faixa_opponent_2 = random.randint(0, len(FAIXAS) - 1)
 
@@ -155,6 +157,7 @@ def reinicia_oponente():
 
 def debug_mode():
    global car_rect, opponent_1_rect, opponent_2_rect
+
    for faixa in FAIXAS:
       pygame.draw.line(SCREEN, RED, (faixa[0], 0), (faixa[1], W_HEIGHT), 4)
 
