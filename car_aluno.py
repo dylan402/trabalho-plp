@@ -61,6 +61,8 @@ opponent_1_rect = opponent_1.get_rect()
 opponent_2_rect = opponent_2.get_rect()
 opponent_1_rect.center = (random.randint(FAIXAS[0][0] + 25, FAIXAS[0][1] - 25), 100)
 opponent_2_rect.center = (random.randint(FAIXAS[2][0] + 25, FAIXAS[2][1] - 25), 100)
+faixa_opponent_1 = 0
+faixa_opponent_2 = 2
 
 # carrega as imagens das árvores, escolhendo-as aleatoriamente. Repare que apenas
 # duas árvores são visíveis na tela a cada instante (não alterar).
@@ -126,15 +128,29 @@ def captura_colisao():
    então manter o jogo em execução e retornar False.
    """
 
-
 def reinicia_oponente():
-   global opponent_1_rect, opponent_2_rect, score
+   global opponent_1_rect, opponent_2_rect, score, faixa_opponent_1, faixa_opponent_2
 
    if(opponent_1_rect.y >= W_HEIGHT + 50):
-      opponent_1_rect.center = (random.randint(INICIO_PISTA + 20, INICIO_PISTA * 2 - 20), -50)
+      faixa = random.randint(0, len(FAIXAS) - 1)
+
+      while (faixa == faixa_opponent_2):
+         faixa = random.randint(0, len(FAIXAS) - 1)
+
+      faixa_opponent_1 = faixa
+
+      opponent_1_rect.center = (random.randint(FAIXAS[faixa][0] + 25, FAIXAS[faixa][1] - 25), -50)
       score += 1
+
    if(opponent_2_rect.y >= W_HEIGHT + 50):
-      opponent_2_rect.center = (random.randint(INICIO_PISTA * 3 + 20, INICIO_PISTA * 4 - 20), -50)
+      faixa = random.randint(0, len(FAIXAS) - 1)
+
+      while (faixa == faixa_opponent_1):
+         faixa = random.randint(0, len(FAIXAS) - 1)
+
+      faixa_opponent_2 = faixa
+
+      opponent_2_rect.center = (random.randint(FAIXAS[faixa][0] + 25, FAIXAS[faixa][1] - 25), -50)
       score += 1
 
    """
@@ -210,8 +226,8 @@ while True:
 
 
    # X [TODO] mover os carrinhos oponentes
-   opponent_1_rect.move_ip(0, 1)
-   opponent_2_rect.move_ip(0, 10)
+   opponent_1_rect.move_ip(0, 5)
+   opponent_2_rect.move_ip(0, 15)
 
    # [TODO] detectar colisão
    captura_colisao()
