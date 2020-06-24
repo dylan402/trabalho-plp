@@ -94,8 +94,8 @@ pygame.mixer.music.set_volume(0.05)
    """
 
 
-def captura_colisao(car_rect):
-   global opponent_1_rect, opponent_2_rect
+def captura_colisao():
+   global car_rect, opponent_1_rect, opponent_2_rect
 
    # Colisão com oponente 1
    if (min(car_rect.x, car_rect.x + car_rect.w) < max(opponent_1_rect.x, opponent_1_rect.x + opponent_1_rect.w)
@@ -205,7 +205,7 @@ while True:
 
 
    # [TODO] detectar colisão
-   captura_colisao(car_rect)
+   captura_colisao()
 
    """ # [TODO] reiniciar oponentes quando
    reinicia_oponente() """
