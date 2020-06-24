@@ -1,6 +1,8 @@
 import sys, pygame, math
 import random
 
+DEBUG_MODE = True if '--debug' in sys.argv else False
+
 # definicao de constantes para o jogo
 FPS = 60
 W_SIZE = W_WIDTH, W_HEIGHT = 1024, 768
@@ -139,6 +141,14 @@ def reinicia_oponente():
    [TODO] Se um oponente sai da tela, renicia-se a sua posicao aleatoriamente na tela
    """
 
+def debug_mode():
+   global car_rect, opponent_1_rect, opponent_2_rect
+   for faixa in FAIXAS:
+      pygame.draw.line(SCREEN, RED, (faixa[0], 0), (faixa[1], W_HEIGHT), 4)
+
+   pygame.draw.rect(SCREEN, RED, (car_rect.x, car_rect.y, car_rect.w, car_rect.h))
+   pygame.draw.rect(SCREEN, RED, (opponent_1_rect.x, opponent_1_rect.y, opponent_1_rect.w, opponent_1_rect.h))
+   pygame.draw.rect(SCREEN, RED, (opponent_2_rect.x, opponent_2_rect.y, opponent_2_rect.w, opponent_2_rect.h))
 
 # CODIGO PRINCIPAL
 while True:
@@ -150,9 +160,6 @@ while True:
    # Desenha as faixas da pista
    for faixa in PISTA_FAIXAS:
       pygame.draw.line(SCREEN, WHITE, (faixa, 0), (faixa, W_HEIGHT), 4)
-   for faixa in FAIXAS:
-      pygame.draw.line(SCREEN, RED, (faixa[0], 0), (faixa[1], W_HEIGHT), 4)
-
 
    # X [TODO] Capturar o evento de fechar o jogo na interface.
    # A musica deve ser finalizada antes do fechamento do jogo.
@@ -224,6 +231,9 @@ while True:
    """ if()):
       SCREEN.blit(font_score.render(str(game_over), True, RED), (50, W_HEIGHT//4))
       car = """
+
+   if DEBUG_MODE == True:
+      debug_mode()
 
    # desenha os objetos em posicoes atualizadas (não alterar)
    SCREEN.blit(trees_images[t1], trees_images_rect[t1])
