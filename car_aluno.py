@@ -123,7 +123,7 @@ def captura_colisao():
    return False
 
    """
-   [TODO] Detectar colisao entre o carrinho e cada um de seus oponentes ('blocos'). Em caso
+   X [TODO] Detectar colisao entre o carrinho e cada um de seus oponentes ('blocos'). Em caso
    de colisão, retornar True e parar o movimento de todos os elementos. Sem colisão detectada,
    então manter o jogo em execução e retornar False.
    """
@@ -132,29 +132,25 @@ def reinicia_oponente():
    global opponent_1_rect, opponent_2_rect, score, faixa_opponent_1, faixa_opponent_2
 
    if(opponent_1_rect.y >= W_HEIGHT + 50):
-      faixa = random.randint(0, len(FAIXAS) - 1)
+      faixa_opponent_1 = random.randint(0, len(FAIXAS) - 1)
 
-      while (faixa == faixa_opponent_2):
-         faixa = random.randint(0, len(FAIXAS) - 1)
+      while (faixa_opponent_1 == faixa_opponent_2):
+         faixa_opponent_1 = random.randint(0, len(FAIXAS) - 1)
 
-      faixa_opponent_1 = faixa
-
-      opponent_1_rect.center = (random.randint(FAIXAS[faixa][0] + 25, FAIXAS[faixa][1] - 25), -50)
+      opponent_1_rect.center = (random.randint(FAIXAS[faixa_opponent_1][0] + 25, FAIXAS[faixa_opponent_1][1] - 25), -50)
       score += 1
 
    if(opponent_2_rect.y >= W_HEIGHT + 50):
-      faixa = random.randint(0, len(FAIXAS) - 1)
+      faixa_opponent_2 = random.randint(0, len(FAIXAS) - 1)
 
-      while (faixa == faixa_opponent_1):
-         faixa = random.randint(0, len(FAIXAS) - 1)
+      while (faixa_opponent_2 == faixa_opponent_1):
+         faixa_opponent_2 = random.randint(0, len(FAIXAS) - 1)
 
-      faixa_opponent_2 = faixa
-
-      opponent_2_rect.center = (random.randint(FAIXAS[faixa][0] + 25, FAIXAS[faixa][1] - 25), -50)
+      opponent_2_rect.center = (random.randint(FAIXAS[faixa_opponent_2][0] + 25, FAIXAS[faixa_opponent_2][1] - 25), -50)
       score += 1
 
    """
-   [TODO] Se um oponente sai da tela, renicia-se a sua posicao aleatoriamente na tela
+   X [TODO] Se um oponente sai da tela, renicia-se a sua posicao aleatoriamente na tela
    """
 
 def debug_mode():
@@ -229,10 +225,10 @@ while True:
    opponent_1_rect.move_ip(0, 5)
    opponent_2_rect.move_ip(0, 15)
 
-   # [TODO] detectar colisão
-   captura_colisao()
+   # X [TODO] detectar colisão
+   colisao = captura_colisao()
 
-   # [TODO] reiniciar oponentes quando
+   # X [TODO] reiniciar oponentes quando
    reinicia_oponente()
 
    # [TODO] a cada intervalo de pontos a velocidade dos oponentes eh aumentada
@@ -244,9 +240,9 @@ while True:
    # [TODO] detectar colisao entre o carrinho do jogador e algum carrinho oponente.
    # Em caso de colisão mostrar a mensagem ''Fim de Jogo'' e carregar a imagem
    # de carrinho batido para o carrinho do jogador.
-   """ if()):
-      SCREEN.blit(font_score.render(str(game_over), True, RED), (50, W_HEIGHT//4))
-      car = """
+   if (colisao == True):
+      SCREEN.blit(font_score.render(str(game_over), True, RED), (W_WIDTH // 3, W_HEIGHT // 4))
+      car = pygame.image.load("assets/images/white_car_crashed.png")
 
    if DEBUG_MODE == True:
       debug_mode()
