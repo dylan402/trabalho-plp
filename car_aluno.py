@@ -57,8 +57,8 @@ car_rect.center = (W_WIDTH // 3 + 40, W_HEIGHT - 100)
 # iniciar aos carrinhos em uma posição fora da tela.
 opponent_1_rect = opponent_1.get_rect()
 opponent_2_rect = opponent_2.get_rect()
-opponent_1_rect.center = (random.randint(INICIO_PISTA + 20, INICIO_PISTA * 2 - 20), 100)
-opponent_2_rect.center = (random.randint(INICIO_PISTA * 3 + 20, INICIO_PISTA * 4 - 20), 100)
+opponent_1_rect.center = (random.randint(FAIXAS[0][0] + 25, FAIXAS[0][1] - 25), 100)
+opponent_2_rect.center = (random.randint(FAIXAS[2][0] + 25, FAIXAS[2][1] - 25), 100)
 
 # carrega as imagens das árvores, escolhendo-as aleatoriamente. Repare que apenas
 # duas árvores são visíveis na tela a cada instante (não alterar).
@@ -127,6 +127,14 @@ def captura_colisao():
 
 def reinicia_oponente():
    global opponent_1_rect, opponent_2_rect, score
+
+   if(opponent_1_rect.y >= W_HEIGHT + 50):
+      opponent_1_rect.center = (random.randint(INICIO_PISTA + 20, INICIO_PISTA * 2 - 20), -50)
+      score += 1
+   if(opponent_2_rect.y >= W_HEIGHT + 50):
+      opponent_2_rect.center = (random.randint(INICIO_PISTA * 3 + 20, INICIO_PISTA * 4 - 20), -50)
+      score += 1
+
    """
    [TODO] Se um oponente sai da tela, renicia-se a sua posicao aleatoriamente na tela
    """
@@ -196,19 +204,13 @@ while True:
 
    # X [TODO] mover os carrinhos oponentes
    opponent_1_rect.move_ip(0, 1)
-   opponent_2_rect.move_ip(0, 1)
-
-   if(opponent_1_rect.y >= W_HEIGHT + 50):
-      opponent_1_rect.center = (random.randint(INICIO_PISTA + 20, INICIO_PISTA * 2 - 20), -50)
-   if(opponent_2_rect.y >= W_HEIGHT + 50):
-      opponent_2_rect.center = (random.randint(INICIO_PISTA * 3 + 20, INICIO_PISTA * 4 - 20), -50)
-
+   opponent_2_rect.move_ip(0, 10)
 
    # [TODO] detectar colisão
    captura_colisao()
 
-   """ # [TODO] reiniciar oponentes quando
-   reinicia_oponente() """
+   # [TODO] reiniciar oponentes quando
+   reinicia_oponente()
 
    # [TODO] a cada intervalo de pontos a velocidade dos oponentes eh aumentada
 
