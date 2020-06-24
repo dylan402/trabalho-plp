@@ -171,7 +171,7 @@ while True:
    # Define cor de background
    SCREEN.fill(GREEN)
    # Desenha fundo da pista
-   pygame.draw.rect(SCREEN, GREY, (INICIO_PISTA, 0, FIM_PISTA, W_HEIGHT))
+   fundo_pista_rect = pygame.draw.rect(SCREEN, GREY, (INICIO_PISTA, 0, FIM_PISTA, W_HEIGHT))
    # Desenha as faixas da pista
    for faixa in PISTA_FAIXAS:
       pygame.draw.line(SCREEN, WHITE, (faixa, 0), (faixa, W_HEIGHT), 4)
@@ -200,6 +200,10 @@ while True:
    # X [TODO] Capturar uma tecla pressionada para mover o carrinho. Usar as teclas
    # UP, DOWN, LEFT e RIGHT (setinhas). Para mover o carrinho use a velocidade na
    # coordenada correta.
+
+   # Não deixar carrinho movimentar para fora da pista
+   car_rect.clamp_ip(fundo_pista_rect)
+
    if pygame.key.get_focused():
       key = pygame.key.get_pressed()
 
