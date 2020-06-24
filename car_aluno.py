@@ -85,7 +85,16 @@ pygame.mixer.music.set_volume(0.05)
 # Funções para o jogo
 #
 
-def captura_colisao_oponentes(car_rect):
+""" def captura_colisao_oponentes():
+   global opponent_1_rect, opponent_2_rect
+
+
+   [TODO] Detectar colisao entre os oponentes ('blocos'). Em caso de colisao,
+       afastar um carrinho para o lado sem deixa-lo sair das pistas.
+   """
+
+
+def captura_colisao(car_rect):
    global opponent_1_rect, opponent_2_rect
 
    # Colisão com oponente 1
@@ -109,14 +118,6 @@ def captura_colisao_oponentes(car_rect):
    print('sem colisão')
    return False
 
-   """
-   [TODO] Detectar colisao entre os oponentes ('blocos'). Em caso de colisao,
-       afastar um carrinho para o lado sem deixa-lo sair das pistas.
-   """
-
-
-def captura_colisao():
-   global SPEED, SPEED_OPPONENT1, SPEED_OPPONENT2
    """
    [TODO] Detectar colisao entre o carrinho e cada um de seus oponentes ('blocos'). Em caso
    de colisão, retornar True e parar o movimento de todos os elementos. Sem colisão detectada,
@@ -204,7 +205,7 @@ while True:
 
 
    # [TODO] detectar colisão
-   captura_colisao_oponentes(car_rect)
+   captura_colisao(car_rect)
 
    """ # [TODO] reiniciar oponentes quando
    reinicia_oponente() """
