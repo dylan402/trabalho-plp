@@ -19,15 +19,15 @@ LEVEL = 10
 # Usar essa quantidade de atualização das velocidades dos carrinhos oponentes.
 # Isto é, a cada 10 carrinhos ultrapassados aumentar a velocidade destes.
 LEVEL_FREQ = 10
-# Tamanho de cada pista (em pixels)
+# Variaveis relacionadas à pista
 INICIO_PISTA = W_WIDTH // 100 * 15
 FIM_PISTA = W_WIDTH // 100 * 45
-FAIXAS_PISTA = [INICIO_PISTA * 2, FIM_PISTA]
 FAIXAS = [
    [INICIO_PISTA, INICIO_PISTA * 2],
    [INICIO_PISTA * 2, INICIO_PISTA * 3],
    [INICIO_PISTA * 3, INICIO_PISTA * 4]
 ]
+PISTA_FAIXAS = [FAIXAS[0][1], FAIXAS[2][0]]
 # Lista contendo as imagens de arvores usadas no jogo
 TREES = ["tree_1.png", "tree_2.png", "tree_3.png", "tree_4.png", "tree_5.png"]
 
@@ -148,7 +148,7 @@ while True:
    # Desenha fundo da pista
    pygame.draw.rect(SCREEN, GREY, (INICIO_PISTA, 0, FIM_PISTA, W_HEIGHT))
    # Desenha as faixas da pista
-   for faixa in FAIXAS_PISTA:
+   for faixa in PISTA_FAIXAS:
       pygame.draw.line(SCREEN, WHITE, (faixa, 0), (faixa, W_HEIGHT), 4)
    for faixa in FAIXAS:
       pygame.draw.line(SCREEN, RED, (faixa[0], 0), (faixa[1], W_HEIGHT), 4)
