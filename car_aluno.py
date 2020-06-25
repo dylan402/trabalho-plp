@@ -236,7 +236,7 @@ while True:
    score_antigo = score
    reinicia_oponente()
 
-   # [TODO] a cada intervalo de pontos a velocidade dos oponentes eh aumentada
+   # X [TODO] a cada intervalo de pontos a velocidade dos oponentes eh aumentada
    if (score_antigo // LEVEL_FREQ < score // LEVEL_FREQ):
       SPEED_OPPONENT1[1] = SPEED_OPPONENT1[1] + SPEED_OPPONENT1[1] * SPEED_LEVEL
       SPEED_OPPONENT2[1] = SPEED_OPPONENT2[1] + SPEED_OPPONENT2[1] * SPEED_LEVEL
