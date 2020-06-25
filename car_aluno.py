@@ -13,8 +13,8 @@ GREEN = (20, 255, 140)
 GREY = (210, 210, 210)
 W_BGCOLOR = GREEN
 SPEED = 5 # velocidade de movimento do carrinho do jogador
-SPEED_OPPONENT1 = [0,2] # velocidade de movimento do carrinho oponente 1
-SPEED_OPPONENT2 = [0,3] # velocidade de movimento do carrinho oponente 1
+SPEED_OPPONENT1 = [0,3] # velocidade de movimento do carrinho oponente 1
+SPEED_OPPONENT2 = [0,5] # velocidade de movimento do carrinho oponente 1
 SPEED_LEVEL = 0.1 # Taxa de aumento da velocidade dos carrinhos
 # próximo nível (valor sugerido: pode ser alterado conforme a sua lógica)
 LEVEL = 10
@@ -119,7 +119,6 @@ def captura_colisao():
       print('colisão oponente 2')
       return True
 
-   print('sem colisão')
    return False
 
    """
@@ -206,37 +205,44 @@ while True:
 
       if key[pygame.K_UP]:
          if key[pygame.K_LEFT]:
-            car_rect.move_ip(-5, -5)
+            car_rect.move_ip(-SPEED, -SPEED)
          elif key[pygame.K_RIGHT]:
-            car_rect.move_ip(5, -5)
+            car_rect.move_ip(SPEED, -SPEED)
          else:
-            car_rect.move_ip(0, -5)
+            car_rect.move_ip(0, -SPEED)
       elif key[pygame.K_DOWN]:
          if key[pygame.K_LEFT]:
-            car_rect.move_ip(-5, 5)
+            car_rect.move_ip(-SPEED, SPEED)
          elif key[pygame.K_RIGHT]:
-            car_rect.move_ip(5, 5)
+            car_rect.move_ip(SPEED, SPEED)
          else:
-            car_rect.move_ip(0, 5)
+            car_rect.move_ip(0, SPEED)
       elif key[pygame.K_LEFT]:
-         car_rect.move_ip(-5, 0)
+         car_rect.move_ip(-SPEED, 0)
       elif key[pygame.K_RIGHT]:
-         car_rect.move_ip(5, 0)
+         car_rect.move_ip(SPEED, 0)
 
 
 
    # X [TODO] mover os carrinhos oponentes
    if game_over == False:
-      opponent_1_rect.move_ip(0, 5)
-      opponent_2_rect.move_ip(0, 15)
+      opponent_1_rect.move_ip(SPEED_OPPONENT1)
+      opponent_2_rect.move_ip(SPEED_OPPONENT2)
 
    # X [TODO] detectar colisão
    colisao = captura_colisao()
 
    # X [TODO] reiniciar oponentes quando
+   score_antigo = score
    reinicia_oponente()
 
    # [TODO] a cada intervalo de pontos a velocidade dos oponentes eh aumentada
+   if (score_antigo // LEVEL_FREQ < score // LEVEL_FREQ):
+      SPEED_OPPONENT1[1] = SPEED_OPPONENT1[1] + SPEED_OPPONENT1[1] * SPEED_LEVEL
+      SPEED_OPPONENT2[1] = SPEED_OPPONENT2[1] + SPEED_OPPONENT2[1] * SPEED_LEVEL
+
+      print(f'SPEED_OPPONENT1 {SPEED_OPPONENT1}')
+      print(f'SPEED_OPPONENT2 {SPEED_OPPONENT2}')
 
 
    # X [TODO] manter o carrinho do jogador na tela. Use valores numéricos da tela e das pistas.
