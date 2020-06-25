@@ -42,7 +42,7 @@ clock = pygame.time.Clock()
 
 # define os textos para 'pontos' e mensagem do 'termino' do jogo (não alterar)
 score = 0
-game_over = "GAME OVER"
+game_over = False
 font_score = pygame.font.Font('assets/fonts/Roboto-Regular.ttf', 50)
 
 # X [TODO] carregar as imagens dos carrinhos
@@ -187,24 +187,21 @@ while True:
          sys.exit()
 
    # X [TODO mover as arvores em 1 pixel. Reposicionar quando as arvores saem da Interface.
-   trees_images_rect[t1].move_ip(0, 1)
-   trees_images_rect[t2].move_ip(0, 1)
+   if game_over == False:
+      trees_images_rect[t1].move_ip(0, 1)
+      trees_images_rect[t2].move_ip(0, 1)
 
-   if(trees_images_rect[t1].y >= W_HEIGHT + 25):
-      t1 = random.randint(0, 2)
-      trees_images_rect[t1].center = (random.randint(W_WIDTH - 350, W_WIDTH - 200), -250)
-   if(trees_images_rect[t2].y >= W_HEIGHT + 25):
-      t2 = random.randint(3, 4)
-      trees_images_rect[t2].center = (random.randint(W_WIDTH - 350, W_WIDTH - 200), -10)
+      if(trees_images_rect[t1].y >= W_HEIGHT + 25):
+         t1 = random.randint(0, 2)
+         trees_images_rect[t1].center = (random.randint(W_WIDTH - 350, W_WIDTH - 200), -250)
+      if(trees_images_rect[t2].y >= W_HEIGHT + 25):
+         t2 = random.randint(3, 4)
+         trees_images_rect[t2].center = (random.randint(W_WIDTH - 350, W_WIDTH - 200), -10)
 
    # X [TODO] Capturar uma tecla pressionada para mover o carrinho. Usar as teclas
    # UP, DOWN, LEFT e RIGHT (setinhas). Para mover o carrinho use a velocidade na
    # coordenada correta.
-
-   # Não deixar carrinho movimentar para fora da pista
-   car_rect.clamp_ip(fundo_pista_rect)
-
-   if pygame.key.get_focused():
+   if pygame.key.get_focused() and game_over == False:
       key = pygame.key.get_pressed()
 
       if key[pygame.K_UP]:
@@ -229,8 +226,9 @@ while True:
 
 
    # X [TODO] mover os carrinhos oponentes
-   opponent_1_rect.move_ip(0, 5)
-   opponent_2_rect.move_ip(0, 15)
+   if game_over == False:
+      opponent_1_rect.move_ip(0, 5)
+      opponent_2_rect.move_ip(0, 15)
 
    # X [TODO] detectar colisão
    colisao = captura_colisao()
@@ -241,14 +239,15 @@ while True:
    # [TODO] a cada intervalo de pontos a velocidade dos oponentes eh aumentada
 
 
-   # [TODO] manter o carrinho do jogador na tela. Use valores numéricos da tela e das pistas.
+   # X [TODO] manter o carrinho do jogador na tela. Use valores numéricos da tela e das pistas.
+   car_rect.clamp_ip(fundo_pista_rect)
 
-
-   # [TODO] detectar colisao entre o carrinho do jogador e algum carrinho oponente.
+   # X [TODO] detectar colisao entre o carrinho do jogador e algum carrinho oponente.
    # Em caso de colisão mostrar a mensagem ''Fim de Jogo'' e carregar a imagem
    # de carrinho batido para o carrinho do jogador.
    if (colisao == True):
-      SCREEN.blit(font_score.render(str(game_over), True, RED), (W_WIDTH // 3, W_HEIGHT // 4))
+      game_over = True
+      SCREEN.blit(font_score.render("GAME OVER", True, RED), (W_WIDTH // 3, W_HEIGHT // 4))
       car = pygame.image.load("assets/images/white_car_crashed.png")
 
    if DEBUG_MODE == True:
